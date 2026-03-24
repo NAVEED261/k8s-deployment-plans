@@ -37,4 +37,4 @@ A reusable skill for generating K8s deployment plans for any future project. Fee
 
 ---
 
-**Author:** [NAVEED261](https://github.com/NAVEED261)
+**Author:** HAFIZ NAVEED UDDIN
