@@ -3,296 +3,619 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>K8s Deployment Plans — Project Summary</title>
+<title>K8s Deployment Plans — NAVEED261</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap');
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --bg: #0d0d0d;
+    --surface: #141414;
+    --surface2: #1c1c1c;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #e8e8e8;
+    --muted: #888;
+    --dim: #555;
+    --teal: #2dd4aa;
+    --teal-dim: rgba(45,212,170,0.12);
+    --blue: #5b9cf6;
+    --blue-dim: rgba(91,156,246,0.12);
+    --orange: #f97316;
+    --orange-dim: rgba(249,115,22,0.12);
+    --green: #4ade80;
+  }
+
+  html { scroll-behavior: smooth; }
+
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f8f7f4;
-    color: #1a1a1a;
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
-    padding: 3rem 1.5rem;
+    line-height: 1.6;
   }
 
-  .wrapper {
-    max-width: 720px;
-    margin: 0 auto;
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(13,13,13,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  .tag {
-    display: inline-block;
-    font-size: 11px;
-    letter-spacing: 0.08em;
+  .nav-brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #888;
-    border: 0.5px solid #ddd;
-    border-radius: 4px;
-    padding: 3px 10px;
-    margin-bottom: 14px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 2rem 3.5rem;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 1px;
+    background: var(--teal);
   }
 
   h1 {
-    font-size: 28px;
+    font-size: clamp(28px, 5vw, 42px);
     font-weight: 500;
-    color: #111;
-    line-height: 1.3;
-    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
   }
 
-  .subtitle {
-    font-size: 15px;
-    color: #555;
-    line-height: 1.75;
-    max-width: 580px;
+  .hero-desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 560px;
+    margin-bottom: 2.5rem;
   }
 
-  hr {
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.18s;
+    letter-spacing: 0.01em;
+    cursor: pointer;
     border: none;
-    border-top: 0.5px solid #e0e0e0;
-    margin: 2rem 0;
   }
+
+  .btn-primary {
+    background: var(--teal);
+    color: #000;
+  }
+
+  .btn-primary:hover { background: #25c49a; transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border2);
+  }
+
+  .btn-ghost:hover { color: var(--text); border-color: var(--border2); background: var(--surface2); }
+
+  /* MAIN CONTENT */
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 2rem 5rem;
+  }
+
+  .section { margin-bottom: 4rem; }
 
   .section-label {
-    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #aaa;
+    color: var(--dim);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* SCENARIO CARDS */
+  .scenarios { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .scenario-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .scenario-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+  }
+
+  .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--dim);
     margin-bottom: 1rem;
+    text-transform: uppercase;
   }
 
-  .scenarios {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 0.5rem;
-  }
-
-  .card {
-    background: #f0efe9;
-    border-radius: 12px;
-    padding: 1.1rem 1.25rem;
-  }
-
-  .card-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
+  .card-icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
   }
 
   .card-title {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
-    color: #111;
-    margin-bottom: 6px;
+    color: #fff;
+    margin-bottom: 8px;
+    line-height: 1.3;
   }
 
   .card-desc {
     font-size: 13px;
-    color: #666;
-    line-height: 1.65;
+    color: var(--muted);
+    line-height: 1.7;
   }
 
-  .checklist {
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 1.1rem;
+  }
+
+  .tag {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--dim);
+  }
+
+  /* CHECKLIST GRID */
+  .check-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 9px;
+    gap: 10px;
   }
 
-  .check-item {
+  .check-row {
     display: flex;
     align-items: flex-start;
-    gap: 9px;
+    gap: 10px;
     font-size: 13px;
-    color: #555;
+    color: var(--muted);
     line-height: 1.5;
   }
 
-  .check-dot {
-    width: 6px;
-    height: 6px;
+  .check-icon {
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
-    background: #1D9E75;
-    margin-top: 5px;
-    flex-shrink: 0;
-  }
-
-  .skill-box {
-    border: 0.5px solid #ddd;
-    border-radius: 12px;
-    padding: 1.1rem 1.25rem;
+    background: var(--teal-dim);
     display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    background: #fff;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
   }
 
-  .skill-icon-wrap {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background: #E1F5EE;
+  /* SKILL BOX */
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .skill-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--teal-dim);
+    border: 1px solid rgba(45,212,170,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
   }
 
-  .skill-text-title {
-    font-size: 14px;
+  .skill-title {
+    font-size: 15px;
     font-weight: 500;
-    color: #111;
-    margin-bottom: 5px;
+    color: #fff;
+    margin-bottom: 6px;
   }
 
-  .skill-text-desc {
+  .skill-desc {
     font-size: 13px;
-    color: #666;
-    line-height: 1.65;
+    color: var(--muted);
+    line-height: 1.7;
   }
 
-  .repo-row {
+  .eval-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(74,222,128,0.1);
+    border: 1px solid rgba(74,222,128,0.2);
+    color: var(--green);
+    margin-top: 10px;
+  }
+
+  /* FILES TABLE */
+  .files-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .files-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    vertical-align: middle;
+  }
+
+  .files-table tr:last-child td { border-bottom: none; }
+
+  .files-table tr:hover td { background: var(--surface2); }
+
+  .file-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--blue);
+  }
+
+  .file-size {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    text-align: right;
+  }
+
+  .files-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  /* REPO FOOTER */
+  .repo-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
     flex-wrap: wrap;
-    gap: 10px;
   }
 
-  .repo-link {
+  .repo-url {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
-    color: #185FA5;
-    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: var(--teal);
     text-decoration: none;
-    padding: 6px 14px;
-    border: 0.5px solid #ddd;
-    border-radius: 8px;
-    background: #f0efe9;
   }
 
-  .repo-link:hover { background: #e5e4de; }
+  .repo-url:hover { text-decoration: underline; }
 
-  .repo-meta {
-    font-size: 12px;
-    color: #aaa;
-  }
-
-  .file-pills {
+  .repo-stats {
     display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 1rem;
+    gap: 16px;
   }
 
-  .pill {
+  .stat {
     font-size: 12px;
-    font-family: 'SF Mono', 'Fira Code', monospace;
-    padding: 4px 10px;
-    border-radius: 4px;
-    border: 0.5px solid #ddd;
-    color: #666;
-    background: #f0efe9;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
   }
 
-  .quote-block {
-    border-left: 2px solid #ccc;
-    padding: 0.5rem 0 0.5rem 1.1rem;
-    margin-top: 1.5rem;
+  .stat span { color: var(--muted); }
+
+  /* QUOTE */
+  .pull-quote {
+    border-left: 2px solid var(--teal);
+    padding: 0.75rem 0 0.75rem 1.25rem;
+    margin-top: 2rem;
     font-size: 14px;
     font-style: italic;
-    color: #666;
-    line-height: 1.75;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 580px;
   }
 
-  @media (max-width: 520px) {
-    .scenarios, .checklist { grid-template-columns: 1fr; }
-    h1 { font-size: 22px; }
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+  @media (max-width: 560px) {
+    .scenarios, .check-grid { grid-template-columns: 1fr; }
+    .skill-card { flex-direction: column; }
+    nav { padding: 0 1rem; }
+    .hero, main { padding-left: 1.25rem; padding-right: 1.25rem; }
   }
 </style>
 </head>
 <body>
-<div class="wrapper">
 
-  <div class="tag">Project 2 — K8s Planning</div>
-  <h1>Kubernetes Deployment Plans<br>for AI-Native Applications</h1>
-  <p class="subtitle">Two detailed infrastructure plans, zero code. The whole point was to think through how you'd actually run these systems — who can access what, what happens when a pod crashes, how secrets rotate, all of it.</p>
+<nav>
+  <div class="nav-brand">k8s-deployment-plans</div>
+  <ul class="nav-links">
+    <li><a href="#scenarios">Scenarios</a></li>
+    <li><a href="#skill">Skill</a></li>
+    <li><a href="#files">Files</a></li>
+    <li><a href="https://github.com/NAVEED261/k8s-deployment-plans" target="_blank">GitHub</a></li>
+  </ul>
+</nav>
 
-  <hr>
-
-  <p class="section-label">Two scenarios covered</p>
-  <div class="scenarios">
-    <div class="card">
-      <div class="card-icon" style="background:#E6F1FB;">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <rect x="1" y="1" width="14" height="10" rx="2" stroke="#185FA5" stroke-width="1.2"/>
-          <path d="M5 14h6M8 11v3" stroke="#185FA5" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="card-title">AI Task Manager</div>
-      <div class="card-desc">UI, backend APIs, a task agent, and a notification service. Four namespaces, six secrets, proper RBAC so the agent only reads what it needs.</div>
-    </div>
-    <div class="card">
-      <div class="card-icon" style="background:#FAECE7;">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <circle cx="8" cy="5" r="3" stroke="#993C1D" stroke-width="1.2"/>
-          <path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="#993C1D" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="card-title">AI Employee — OpenClaw</div>
-      <div class="card-desc">Personal AI worker with access to emails, calendar, and code execution. Security was the whole conversation — gVisor sandbox, Vault, default-deny networking.</div>
-    </div>
+<div class="hero">
+  <div class="hero-eyebrow">Project 2 — K8s Planning</div>
+  <h1>Kubernetes Deployment Plans for AI-Native Apps</h1>
+  <p class="hero-desc">Two detailed infrastructure plans, zero code. The whole point was to think through how you'd actually run these systems — who can access what, what happens when a pod crashes, how secrets rotate.</p>
+  <div class="hero-actions">
+    <a href="https://github.com/NAVEED261/k8s-deployment-plans" class="btn btn-primary" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      View on GitHub
+    </a>
+    <a href="plan1.md" class="btn btn-ghost">Plan 1 — Task Manager</a>
+    <a href="plan2.md" class="btn btn-ghost">Plan 2 — OpenClaw</a>
   </div>
-
-  <hr>
-
-  <p class="section-label">What each plan covers</p>
-  <div class="checklist" style="margin-bottom:1.75rem;">
-    <div class="check-item"><div class="check-dot"></div><span>Namespaces for logical isolation</span></div>
-    <div class="check-item"><div class="check-dot"></div><span>Deployments and StatefulSets</span></div>
-    <div class="check-item"><div class="check-dot"></div><span>ClusterIP, NodePort, LoadBalancer</span></div>
-    <div class="check-item"><div class="check-dot"></div><span>CPU and memory sizing per service</span></div>
-    <div class="check-item"><div class="check-dot"></div><span>ConfigMaps for environment config</span></div>
-    <div class="check-item"><div class="check-dot"></div><span>Secrets with rotation schedules</span></div>
-    <div class="check-item"><div class="check-dot"></div><span>RBAC roles and service accounts</span></div>
-    <div class="check-item"><div class="check-dot"></div><span>Inter-service DNS and NetworkPolicy</span></div>
-  </div>
-
-  <hr>
-
-  <p class="section-label">Reusable skill</p>
-  <div class="skill-box" style="margin-bottom:1.75rem;">
-    <div class="skill-icon-wrap">
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <path d="M9 2L11.5 7H16.5L12.5 10.5L14 16L9 13L4 16L5.5 10.5L1.5 7H6.5L9 2Z" stroke="#0F6E56" stroke-width="1.3" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <div>
-      <div class="skill-text-title">K8 Planning Skill</div>
-      <div class="skill-text-desc">A reusable agent skill for any future project. Give it a list of services, a security level, and expected traffic — it walks you through namespace design, workload classification, service types, and a full security checklist. Includes three eval test cases for Anthropic's Skill Creator.</div>
-    </div>
-  </div>
-
-  <hr>
-
-  <p class="section-label">Submitted to GitHub</p>
-  <div class="repo-row">
-    <a class="repo-link" href="https://github.com/NAVEED261/k8s-deployment-plans" target="_blank">github.com/NAVEED261/k8s-deployment-plans</a>
-    <span class="repo-meta">Public repo · 4 files · 3 commits</span>
-  </div>
-  <div class="file-pills">
-    <span class="pill">plan1.md</span>
-    <span class="pill">plan2.md</span>
-    <span class="pill">k8-planning-skill.md</span>
-    <span class="pill">README.md</span>
-  </div>
-  <div class="quote-block">
-    The hardest part was the OpenClaw plan — when an AI agent has access to someone's inbox and can run code, the security questions get real fast. Default-deny networking, a sandboxed execution namespace, audit logs for every action. Most K8s tutorials skip all of this.
-  </div>
-
 </div>
+
+<main>
+
+  <section class="section" id="scenarios">
+    <div class="section-label">Two scenarios</div>
+    <div class="scenarios">
+
+      <a class="scenario-card" href="plan1.md">
+        <div class="card-num">Scenario 01</div>
+        <div class="card-icon-wrap" style="background:var(--blue-dim); border:1px solid rgba(91,156,246,0.2);">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <rect x="1.5" y="1.5" width="15" height="11" rx="2.5" stroke="#5b9cf6" stroke-width="1.3"/>
+            <path d="M6 16.5h6M9 12.5v4" stroke="#5b9cf6" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-title">AI Native Task Manager</div>
+        <div class="card-desc">UI, backend APIs, a task agent, and a notification service. Four namespaces, six secrets, RBAC scoped so the agent reads exactly what it needs — nothing more.</div>
+        <div class="card-tags">
+          <span class="tag">4 namespaces</span>
+          <span class="tag">6 deployments</span>
+          <span class="tag">2 statefulsets</span>
+          <span class="tag">HPA</span>
+        </div>
+      </a>
+
+      <a class="scenario-card" href="plan2.md">
+        <div class="card-num">Scenario 02</div>
+        <div class="card-icon-wrap" style="background:var(--orange-dim); border:1px solid rgba(249,115,22,0.2);">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <circle cx="9" cy="6" r="3.5" stroke="#f97316" stroke-width="1.3"/>
+            <path d="M2.5 16c0-3.59 2.91-6 6.5-6s6.5 2.41 6.5 6" stroke="#f97316" stroke-width="1.3" stroke-linecap="round"/>
+            <path d="M13 8.5l1 1M14 8.5l-1 1" stroke="#f97316" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-title">AI Employee — OpenClaw</div>
+        <div class="card-desc">Personal AI worker with email, calendar, and code execution access. gVisor sandbox, default-deny networking, Vault-backed secrets, immutable audit logs.</div>
+        <div class="card-tags">
+          <span class="tag">5 namespaces</span>
+          <span class="tag">gVisor</span>
+          <span class="tag">Vault</span>
+          <span class="tag">Zero Trust</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">What each plan covers</div>
+    <div class="check-grid">
+      <div class="check-row">
+        <div class="check-icon">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#2dd4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span>Namespaces for logical isolation</span>
+      </div>
+      <div class="check-row">
+        <div class="check-icon">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#2dd4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span>Deployments and StatefulSets</span>
+      </div>
+      <div class="check-row">
+        <div class="check-icon">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#2dd4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span>ClusterIP, NodePort, LoadBalancer</span>
+      </div>
+      <div class="check-row">
+        <div class="check-icon">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#2dd4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span>CPU and memory sizing per service</span>
+      </div>
+      <div class="check-row">
+        <div class="check-icon">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#2dd4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span>ConfigMaps for environment config</span>
+      </div>
+      <div class="check-row">
+        <div class="check-icon">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#2dd4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span>Secrets with rotation schedules</span>
+      </div>
+      <div class="check-row">
+        <div class="check-icon">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#2dd4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span>RBAC roles and service accounts</span>
+      </div>
+      <div class="check-row">
+        <div class="check-icon">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#2dd4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span>Inter-service DNS and NetworkPolicy</span>
+      </div>
+    </div>
+
+    <p class="pull-quote">
+      The hardest part was the OpenClaw plan. When an AI agent has access to someone's inbox and can run code, the security questions get real fast. Default-deny networking, a sandboxed execution namespace, audit logs for every action. Most K8s tutorials skip all of this.
+    </p>
+  </section>
+
+  <section class="section" id="skill">
+    <div class="section-label">Reusable skill</div>
+    <div class="skill-card">
+      <div class="skill-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 2L12.8 8H19L14 11.8L16 18L10 14.5L4 18L6 11.8L1 8H7.2L10 2Z" stroke="#2dd4aa" stroke-width="1.4" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="skill-title">K8 Planning Skill</div>
+        <div class="skill-desc">A reusable agent skill for any future project. Give it a list of services, a security level, and expected traffic — it walks through namespace design, workload classification, service types, resource sizing, and a full security checklist. The K8P framework makes the process repeatable without starting from scratch every time.</div>
+        <div class="eval-badge">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#4ade80" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Includes Anthropic Skill Creator eval — 3 test cases
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="files">
+    <div class="section-label">Files in this repo</div>
+    <div class="files-wrap">
+      <table class="files-table">
+        <tbody>
+          <tr>
+            <td><a href="plan1.md" class="file-name">plan1.md</a></td>
+            <td>AI Native Task Manager — full K8s deployment plan</td>
+            <td class="file-size">~25 KB</td>
+          </tr>
+          <tr>
+            <td><a href="plan2.md" class="file-name">plan2.md</a></td>
+            <td>AI Employee (OpenClaw) — security-first K8s plan</td>
+            <td class="file-size">~37 KB</td>
+          </tr>
+          <tr>
+            <td><a href="k8-planning-skill.md" class="file-name">k8-planning-skill.md</a></td>
+            <td>Reusable planning skill with eval test cases</td>
+            <td class="file-size">~25 KB</td>
+          </tr>
+          <tr>
+            <td><a href="README.md" class="file-name">README.md</a></td>
+            <td>Project overview and summary</td>
+            <td class="file-size">~2 KB</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <div class="repo-bar">
+    <a class="repo-url" href="https://github.com/NAVEED261/k8s-deployment-plans" target="_blank">github.com/NAVEED261/k8s-deployment-plans</a>
+    <div class="repo-stats">
+      <div class="stat">files <span>5</span></div>
+      <div class="stat">commits <span>4</span></div>
+      <div class="stat">visibility <span>public</span></div>
+    </div>
+  </div>
+
+</main>
 </body>
 </html>
