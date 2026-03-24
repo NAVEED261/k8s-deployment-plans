@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K8s Deployment Plans — Project Summary</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8f7f4;
+    color: #1a1a1a;
+    min-height: 100vh;
+    padding: 3rem 1.5rem;
+  }
+
+  .wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #888;
+    border: 0.5px solid #ddd;
+    border-radius: 4px;
+    padding: 3px 10px;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 500;
+    color: #111;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.75;
+    max-width: 580px;
+  }
+
+  hr {
+    border: none;
+    border-top: 0.5px solid #e0e0e0;
+    margin: 2rem 0;
+  }
+
+  .section-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #aaa;
+    margin-bottom: 1rem;
+  }
+
+  .scenarios {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 0.5rem;
+  }
+
+  .card {
+    background: #f0efe9;
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+  }
+
+  .card-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #111;
+    margin-bottom: 6px;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.65;
+  }
+
+  .checklist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  .check-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #1D9E75;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .skill-box {
+    border: 0.5px solid #ddd;
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: #fff;
+  }
+
+  .skill-icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #E1F5EE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .skill-text-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #111;
+    margin-bottom: 5px;
+  }
+
+  .skill-text-desc {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.65;
+  }
+
+  .repo-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .repo-link {
+    font-size: 13px;
+    color: #185FA5;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 0.5px solid #ddd;
+    border-radius: 8px;
+    background: #f0efe9;
+  }
+
+  .repo-link:hover { background: #e5e4de; }
+
+  .repo-meta {
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  .file-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .pill {
+    font-size: 12px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 0.5px solid #ddd;
+    color: #666;
+    background: #f0efe9;
+  }
+
+  .quote-block {
+    border-left: 2px solid #ccc;
+    padding: 0.5rem 0 0.5rem 1.1rem;
+    margin-top: 1.5rem;
+    font-size: 14px;
+    font-style: italic;
+    color: #666;
+    line-height: 1.75;
+  }
+
+  @media (max-width: 520px) {
+    .scenarios, .checklist { grid-template-columns: 1fr; }
+    h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="tag">Project 2 — K8s Planning</div>
+  <h1>Kubernetes Deployment Plans<br>for AI-Native Applications</h1>
+  <p class="subtitle">Two detailed infrastructure plans, zero code. The whole point was to think through how you'd actually run these systems — who can access what, what happens when a pod crashes, how secrets rotate, all of it.</p>
+
+  <hr>
+
+  <p class="section-label">Two scenarios covered</p>
+  <div class="scenarios">
+    <div class="card">
+      <div class="card-icon" style="background:#E6F1FB;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="1" y="1" width="14" height="10" rx="2" stroke="#185FA5" stroke-width="1.2"/>
+          <path d="M5 14h6M8 11v3" stroke="#185FA5" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="card-title">AI Task Manager</div>
+      <div class="card-desc">UI, backend APIs, a task agent, and a notification service. Four namespaces, six secrets, proper RBAC so the agent only reads what it needs.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:#FAECE7;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="5" r="3" stroke="#993C1D" stroke-width="1.2"/>
+          <path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="#993C1D" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="card-title">AI Employee — OpenClaw</div>
+      <div class="card-desc">Personal AI worker with access to emails, calendar, and code execution. Security was the whole conversation — gVisor sandbox, Vault, default-deny networking.</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <p class="section-label">What each plan covers</p>
+  <div class="checklist" style="margin-bottom:1.75rem;">
+    <div class="check-item"><div class="check-dot"></div><span>Namespaces for logical isolation</span></div>
+    <div class="check-item"><div class="check-dot"></div><span>Deployments and StatefulSets</span></div>
+    <div class="check-item"><div class="check-dot"></div><span>ClusterIP, NodePort, LoadBalancer</span></div>
+    <div class="check-item"><div class="check-dot"></div><span>CPU and memory sizing per service</span></div>
+    <div class="check-item"><div class="check-dot"></div><span>ConfigMaps for environment config</span></div>
+    <div class="check-item"><div class="check-dot"></div><span>Secrets with rotation schedules</span></div>
+    <div class="check-item"><div class="check-dot"></div><span>RBAC roles and service accounts</span></div>
+    <div class="check-item"><div class="check-dot"></div><span>Inter-service DNS and NetworkPolicy</span></div>
+  </div>
+
+  <hr>
+
+  <p class="section-label">Reusable skill</p>
+  <div class="skill-box" style="margin-bottom:1.75rem;">
+    <div class="skill-icon-wrap">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path d="M9 2L11.5 7H16.5L12.5 10.5L14 16L9 13L4 16L5.5 10.5L1.5 7H6.5L9 2Z" stroke="#0F6E56" stroke-width="1.3" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="skill-text-title">K8 Planning Skill</div>
+      <div class="skill-text-desc">A reusable agent skill for any future project. Give it a list of services, a security level, and expected traffic — it walks you through namespace design, workload classification, service types, and a full security checklist. Includes three eval test cases for Anthropic's Skill Creator.</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <p class="section-label">Submitted to GitHub</p>
+  <div class="repo-row">
+    <a class="repo-link" href="https://github.com/NAVEED261/k8s-deployment-plans" target="_blank">github.com/NAVEED261/k8s-deployment-plans</a>
+    <span class="repo-meta">Public repo · 4 files · 3 commits</span>
+  </div>
+  <div class="file-pills">
+    <span class="pill">plan1.md</span>
+    <span class="pill">plan2.md</span>
+    <span class="pill">k8-planning-skill.md</span>
+    <span class="pill">README.md</span>
+  </div>
+  <div class="quote-block">
+    The hardest part was the OpenClaw plan — when an AI agent has access to someone's inbox and can run code, the security questions get real fast. Default-deny networking, a sandboxed execution namespace, audit logs for every action. Most K8s tutorials skip all of this.
+  </div>
+
+</div>
+</body>
+</html>
