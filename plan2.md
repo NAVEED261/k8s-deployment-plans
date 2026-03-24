@@ -1344,3 +1344,62 @@ metadata:
 ---
 
 *Plan created for k8s-deployment-plans project | GitHub: NAVEED261*
+
+---
+
+## 13. NodePort — Internal Security Dashboard
+
+```yaml
+# Security Monitoring Dashboard — NodePort (Security team VPN only)
+apiVersion: v1
+kind: Service
+metadata:
+  name: security-dashboard-service
+  namespace: openclaw-security
+  annotations:
+    description: "Security audit dashboard — VPN access only"
+spec:
+  type: NodePort
+  selector:
+    app: audit-logger
+  ports:
+    - port: 9200
+      targetPort: 9200
+      nodePort: 30920        # Security team accesses at <NodeIP>:30920
+
+---
+# Agent Debug Service — NodePort (DevOps team only)
+apiVersion: v1
+kind: Service
+metadata:
+  name: agent-debug-service
+  namespace: openclaw-core
+  annotations:
+    description: "Debug endpoint for AI agent — restricted VPN access"
+spec:
+  type: NodePort
+  selector:
+    app: openclaw-agent
+  ports:
+    - port: 7000
+      targetPort: 7000
+      nodePort: 30700
+```
+
+### All Three Service Types — OpenClaw Summary
+
+| Service Type | Used For | Example in This Plan |
+|---|---|---|
+| **LoadBalancer** | Public HTTPS user access | UI Interface (port 443) |
+| **ClusterIP** | Internal secure pod communication | Agent, Auth, Databases |
+| **NodePort** | Security team VPN dashboard access | Audit Logger (port 30920) |
+
+### NodePort Security Rules for OpenClaw
+
+```
+Rule 1: NodePort range restricted to 30000-32767
+Rule 2: Firewall rule — only allow from security team IP range
+Rule 3: NodePort services must be in non-public namespaces
+Rule 4: All NodePort traffic logged by Audit Logger
+Rule 5: NodePort disabled in production — use Ingress + ClusterIP instead
+```

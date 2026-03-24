@@ -745,3 +745,122 @@ COMPLIANCE_REQUIREMENTS: pci-dss
 ---
 
 *K8 Planning Skill v1.0 | Created by NAVEED261 | GitHub: k8s-deployment-plans*
+
+---
+
+## 12. Optional: Skill Eval using Skill Creator (Anthropic)
+
+> This section covers how to evaluate the K8 Planning Skill using **Anthropic's Skill Creator** eval framework.
+
+### What is Skill Creator Eval?
+
+Skill Creator from Anthropic allows you to test an agent skill by:
+1. Giving it **test inputs** (project descriptions)
+2. Checking **outputs** against expected criteria
+3. Scoring the skill automatically
+
+### Eval Test Cases
+
+#### Test Case 1 — Simple Web App
+
+```
+INPUT:
+  PROJECT_NAME: "Blog Platform"
+  COMPONENTS: ["Frontend", "Backend API", "PostgreSQL"]
+  SECURITY_LEVEL: standard
+  TRAFFIC: low
+
+EXPECTED OUTPUT MUST CONTAIN:
+  ✅ 2+ Namespaces defined
+  ✅ Frontend → Deployment (stateless)
+  ✅ PostgreSQL → StatefulSet (stateful)
+  ✅ Frontend → LoadBalancer service
+  ✅ Backend → ClusterIP service
+  ✅ PostgreSQL → ClusterIP service (never exposed)
+  ✅ At least 1 ConfigMap
+  ✅ At least 1 Secret with rotation policy
+  ✅ RBAC Role for backend service account
+  ✅ DNS-based inter-service communication shown
+
+SCORE: Pass if 9/10 criteria met
+```
+
+#### Test Case 2 — AI Application (Medium Complexity)
+
+```
+INPUT:
+  PROJECT_NAME: "AI Customer Support Bot"
+  COMPONENTS: ["Chat UI", "Bot API", "LLM Agent", "Vector DB", "PostgreSQL"]
+  SECURITY_LEVEL: high
+  TRAFFIC: medium
+  HAS_AI_COMPONENTS: yes
+
+EXPECTED OUTPUT MUST CONTAIN:
+  ✅ 3+ Namespaces (UI, backend, data separation)
+  ✅ LLM Agent CPU limit ≥ 2000m (AI needs more)
+  ✅ LLM Agent Memory limit ≥ 2Gi
+  ✅ Vector DB → StatefulSet
+  ✅ NetworkPolicy deny-all present
+  ✅ All 3 service types used (LoadBalancer, ClusterIP, NodePort)
+  ✅ Secret rotation schedule defined
+  ✅ Non-root containers specified
+  ✅ HPA defined for API layer
+
+SCORE: Pass if 8/9 criteria met
+```
+
+#### Test Case 3 — Security-Critical App
+
+```
+INPUT:
+  PROJECT_NAME: "Banking Payment System"
+  COMPONENTS: ["Web App", "Payment API", "Fraud Detection AI", "Database"]
+  SECURITY_LEVEL: maximum
+  COMPLIANCE: pci-dss
+
+EXPECTED OUTPUT MUST CONTAIN:
+  ✅ Separate namespace for payment processing
+  ✅ gVisor or sandbox runtime mentioned
+  ✅ Vault or external secrets manager mentioned
+  ✅ Audit logging service defined
+  ✅ Default-deny NetworkPolicy
+  ✅ readOnlyRootFilesystem: true
+  ✅ capabilities.drop: ALL
+  ✅ No wildcard (*) RBAC verbs
+  ✅ Secret expiry dates defined
+  ✅ PCI-DSS compliance notes
+
+SCORE: Pass if 9/10 criteria met
+```
+
+### Eval Scoring Rubric
+
+```
+90-100%  → Skill is production-ready ✅
+70-89%   → Skill needs minor improvements ⚠️
+50-69%   → Skill needs significant work ❌
+< 50%    → Skill redesign needed 🔴
+```
+
+### How to Run Eval with Skill Creator
+
+```
+Step 1: Go to Anthropic Console → Skill Creator
+Step 2: Upload k8-planning-skill.md as the skill definition
+Step 3: Create eval dataset with above 3 test cases
+Step 4: Run eval — Skill Creator grades each output
+Step 5: Review failing criteria and improve skill
+Step 6: Re-run until score > 90%
+```
+
+### Eval Results (Expected)
+
+| Test Case | Expected Score | Key Strength |
+|---|---|---|
+| Simple Web App | 95/100 | Clear decision trees guide correct choices |
+| AI Application | 92/100 | AI resource sizing guide prevents under-provisioning |
+| Security-Critical | 90/100 | Security checklist ensures nothing missed |
+
+---
+
+*K8 Planning Skill v1.1 — with Anthropic Skill Creator Eval | NAVEED261*

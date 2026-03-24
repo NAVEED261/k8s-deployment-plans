@@ -996,3 +996,46 @@ spec:
 ---
 
 *Plan created for k8s-deployment-plans project | GitHub: NAVEED261*
+
+---
+
+## 11. NodePort — Admin Dashboard Service
+
+Assignment mein NodePort bhi required tha. Yahan Admin Dashboard ke liye NodePort use kiya gaya hai:
+
+```yaml
+# Admin Dashboard — NodePort (VPN/Internal team access only)
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-dashboard-service
+  namespace: task-backend
+  annotations:
+    description: "Internal admin panel — accessible only within VPN"
+spec:
+  type: NodePort
+  selector:
+    app: backend-api
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080        # Accessible at <NodeIP>:30080
+```
+
+### Why NodePort Here?
+
+| Use Case | Why NodePort |
+|---|---|
+| Admin dashboard | Not for public — only DevOps/Admin team via VPN |
+| Internal monitoring | Grafana/Prometheus access within corporate network |
+| Debugging | Dev team accesses specific node directly |
+
+> **Security Note:** NodePort range is 30000-32767. Always restrict access via firewall rules — only allow from trusted IP ranges.
+
+### All Three Service Types — Summary
+
+| Service Type | Used For | Example in This Plan |
+|---|---|---|
+| **LoadBalancer** | Internet-facing public access | UI Interface (port 80/443) |
+| **ClusterIP** | Internal pod-to-pod communication | Backend API, Task Agent, DB |
+| **NodePort** | Internal team/VPN access | Admin Dashboard (port 30080) |
